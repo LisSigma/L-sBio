@@ -12,6 +12,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      cursor: none;
     }
 
     html, body {
@@ -26,7 +27,19 @@
       background: transparent;
     }
 
-    /* Full viewport background gradient container */
+    .custom-cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: rgba(0, 183, 255, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 8px rgba(0, 195, 255, 0.6), 0 0 16px rgba(0, 195, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s ease;
+    }
+
     .background-gradient {
       position: fixed;
       inset: 0;
@@ -35,7 +48,6 @@
       pointer-events: none;
     }
 
-    /* ✨ Sparkling Particles */
     .sparkles {
       pointer-events: none;
       position: fixed;
@@ -58,21 +70,11 @@
     }
 
     @keyframes sparkleAnim {
-      0% {
-        opacity: 0.7;
-        transform: translateY(0) scale(1);
-      }
-      50% {
-        opacity: 0.2;
-        transform: translateY(-6px) scale(0.6);
-      }
-      100% {
-        opacity: 0.7;
-        transform: translateY(0) scale(1);
-      }
+      0% { opacity: 0.7; transform: translateY(0) scale(1); }
+      50% { opacity: 0.2; transform: translateY(-6px) scale(0.6); }
+      100% { opacity: 0.7; transform: translateY(0) scale(1); }
     }
 
-    /* 🌊 Animated SVG Waves Background */
     .waves-container {
       position: fixed;
       bottom: 0;
@@ -114,35 +116,22 @@
       to { transform: translateX(-50%); }
     }
 
-    /* 👤 Centered Content Container Box with subtle white translucent background */
     .content-box {
       position: relative;
       z-index: 1;
       max-width: 360px;
       width: 90vw;
-
-      background: rgba(255 255 255 / 0.08); /* very subtle white */
+      background: rgba(255 255 255 / 0.08);
       border-radius: 30px;
       padding: 40px 30px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       user-select: none;
       animation: fadeIn 2s ease-in-out;
-
-      /* subtle white border */
       border: 1.5px solid rgba(255 255 255 / 0.12);
-
-      /* subtle shadow to help it pop */
-      box-shadow:
-        0 8px 30px rgba(255 255 255 / 0.06),
-        inset 0 0 20px rgba(255 255 255 / 0.10);
-
-      /* keep text readable */
-      text-shadow:
-        0 0 6px rgba(0, 255, 255, 0.8),
-        0 0 10px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 30px rgba(255 255 255 / 0.06), inset 0 0 20px rgba(255 255 255 / 0.10);
+      text-shadow: 0 0 6px rgba(0, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     .pfp {
@@ -164,7 +153,6 @@
       color: white;
     }
 
-    /* Container for icons side by side */
     .links-row {
       display: flex;
       gap: 40px;
@@ -204,11 +192,7 @@
       font-weight: 900;
       font-size: 48px;
       color: #7289da;
-      text-shadow:
-        0 0 5px #7289da,
-        0 0 10px #7289da,
-        0 0 20px #99aaff,
-        0 0 30px #99aaff;
+      text-shadow: 0 0 5px #7289da, 0 0 10px #7289da, 0 0 20px #99aaff, 0 0 30px #99aaff;
       transition: transform 0.3s ease, text-shadow 0.3s ease;
       display: flex;
       align-items: center;
@@ -222,50 +206,130 @@
 
     .link-icon.discord:hover {
       transform: scale(1.15) rotate(10deg);
-      text-shadow:
-        0 0 10px #99aaff,
-        0 0 20px #aabbff,
-        0 0 30px #ccddee,
-        0 0 40px #ddeeff;
+      text-shadow: 0 0 10px #99aaff, 0 0 20px #aabbff, 0 0 30px #ccddee, 0 0 40px #ddeeff;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes slideIn { 0% { transform: translateY(40px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+
+    /* Terminal styles */
+    .terminal {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 50, 80, 0.3);
+      border: 1px solid rgba(0, 183, 255, 0.4);
+      border-radius: 12px;
+      padding: 10px 15px;
+      z-index: 10000;
+      backdrop-filter: blur(6px);
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 14px;
+      width: 300px;
+      max-width: 80%;
+      display: none;
+      animation: fadeIn 0.4s ease;
+      flex-direction: column;
+      user-select: text;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    .terminal-history {
+      margin-bottom: 5px;
+      white-space: pre-wrap;
+      line-height: 1.3;
+      max-height: 150px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Hide scrollbar for Firefox */
     }
 
-    @keyframes slideIn {
-      0% { transform: translateY(40px); opacity: 0; }
+    .terminal-history::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome/Safari */
+    }
+
+    .terminal input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: transparent; /* hide actual text */
+      width: 100%;
+      font-family: monospace;
+      font-size: 14px;
+      caret-color: #00ff00;
+      letter-spacing: 0.12em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Letter bounce animations */
+    .letter {
+      display: inline-block;
+      position: relative;
+      animation: letterBounce 0.3s ease forwards;
+      color: #00ff00;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .letter.bounceOut {
+      animation: letterBounceOut 0.3s ease forwards;
+    }
+
+    @keyframes letterBounce {
+      0% { transform: translateY(10px); opacity: 0; }
+      50% { transform: translateY(-10px); opacity: 1; }
       100% { transform: translateY(0); opacity: 1; }
     }
 
-    @keyframes fadeSlideUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes letterBounceOut {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(10px); opacity: 0.5; }
+      100% { transform: translateY(20px); opacity: 0; }
+    }
+
+    /* Container to hold bouncing letters on top of input */
+    .bouncing-letters-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      letter-spacing: 0.12em;
+      font-family: monospace;
+      font-size: 14px;
+      color: #00ff00;
+      user-select: none;
+      padding-left: 2px;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background gradient behind everything -->
+  <!-- Custom cursor -->
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <!-- Background gradient -->
   <div class="background-gradient" aria-hidden="true"></div>
 
-  <!-- 🔊 Audio playback -->
+  <!-- Audio -->
   <audio autoplay loop playsinline muted id="bgAudio">
     <source src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/ssvid.net--fake-emotions_360.mp4" type="audio/mp4">
     Your browser does not support audio playback.
   </audio>
 
-  <!-- ✨ Sparkling Particles Container -->
+  <!-- Sparkles -->
   <div class="sparkles" id="sparkles"></div>
 
-  <!-- 🌊 Animated SVG Waves Background -->
+  <!-- Waves -->
   <div class="waves-container" aria-hidden="true">
     <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,192L48,176C96,160,192,128,288,144C384,160,480,224,576,234.7C672,245,768,203,864,170.7C960,139,1056,117,1152,112C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/>
@@ -278,62 +342,205 @@
     </svg>
   </div>
 
-  <!-- 👤 Profile content box -->
+  <!-- Content box -->
   <div class="content-box" role="main" aria-label="Profile content">
     <img class="pfp" src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/download.jfif" alt="L Profile Picture" />
     <h1>L</h1>
-
-    <!-- Icons side by side -->
     <nav class="links-row" aria-label="Social links">
-      <a href="https://www.youtube.com/@L_Cant_Have_L_Username" target="_blank" rel="noopener noreferrer" class="link-icon youtube" aria-label="YouTube Channel">
+      <a href="https://www.youtube.com/@L_Cant_Have_L_Username" class="link-icon youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube Channel">
         <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube Logo" />
       </a>
-      <a href="https://discord.gg/yxruActV" target="_blank" rel="noopener noreferrer" class="link-icon discord" aria-label="Join Discord">
+      <a href="https://discord.gg/yxruActV" class="link-icon discord" target="_blank" rel="noopener noreferrer" aria-label="Join Discord">
         M
       </a>
     </nav>
   </div>
 
+  <!-- Terminal -->
+  <div class="terminal" id="terminal" role="region" aria-label="Command terminal">
+    <div class="terminal-history" id="terminalHistory"></div>
+    <div style="position: relative; width: 100%;">
+      <input type="text" id="terminalInput" autocomplete="off" spellcheck="false" aria-label="Terminal input" />
+      <div class="bouncing-letters-container" id="bouncingLetters"></div>
+    </div>
+  </div>
+
   <script>
-    const audio = document.getElementById('bgAudio');
+    // Custom cursor follow
+    const cursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
 
-    // Unmute and try play quickly
-    audio.muted = false;
-    function tryPlayAudio(attempt = 0) {
-      audio.play().catch(() => {
-        if (attempt < 5) {
-          setTimeout(() => tryPlayAudio(attempt + 1), 400);
-        }
-      });
-    }
-    tryPlayAudio();
-
-    // Retry on first click
-    document.body.addEventListener('click', () => {
-      tryPlayAudio();
-    }, { once: true });
-
-    // Sparkles setup
+    // Sparkles generation
     const sparklesContainer = document.getElementById('sparkles');
     const sparkleCount = 60;
-
     for(let i = 0; i < sparkleCount; i++) {
       const sparkle = document.createElement('div');
       sparkle.classList.add('sparkle');
-
       const size = Math.random() * 1.5 + 1.5;
       sparkle.style.width = size + 'px';
       sparkle.style.height = size + 'px';
-
       sparkle.style.top = (Math.random() * 100) + 'vh';
       sparkle.style.left = (Math.random() * 100) + 'vw';
-
       sparkle.style.animationDuration = (Math.random() * 4 + 2) + 's';
       sparkle.style.animationDelay = (Math.random() * 5) + 's';
-
       sparklesContainer.appendChild(sparkle);
     }
-  </script>
 
+    // Audio play handling
+    const audio = document.getElementById('bgAudio');
+    audio.muted = false;
+    function tryPlayAudio(attempt = 0) {
+      audio.play().catch(() => {
+        if (attempt < 5) setTimeout(() => tryPlayAudio(attempt + 1), 400);
+      });
+    }
+    tryPlayAudio();
+    document.body.addEventListener('click', () => tryPlayAudio(), { once: true });
+
+    // Terminal functionality
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('terminalInput');
+    const history = document.getElementById('terminalHistory');
+    const bouncingLetters = document.getElementById('bouncingLetters');
+
+    // Show terminal on '/' key press
+    window.addEventListener('keydown', e => {
+      if (e.key === '/' && !terminal.style.display) {
+        terminal.style.display = 'flex';
+        input.focus();
+        e.preventDefault();
+      }
+      // Hide terminal on Escape
+      if (e.key === 'Escape') {
+        terminal.style.display = 'none';
+      }
+    });
+
+    // Utility to append to terminal history
+    function appendHistory(text) {
+      history.textContent += text + '\n';
+      history.scrollTop = history.scrollHeight;
+    }
+
+    // Commands list for /help
+    const commandsList = [
+      '/youtube',
+      '/monohub',
+      '/skid',
+      '/help'
+    ];
+
+    // Input value as array of letters (for syncing spans)
+    let lettersArray = [];
+
+    // Append single letter span with bounce
+    function addLetter(char) {
+      const span = document.createElement('span');
+      span.classList.add('letter');
+      span.textContent = char;
+      bouncingLetters.appendChild(span);
+
+      lettersArray.push(span);
+
+      // Remove bounceOut class if any (in case reused)
+      span.classList.remove('bounceOut');
+    }
+
+    // Remove last letter span with bounce out animation
+    function removeLastLetter() {
+      if (lettersArray.length === 0) return;
+      const lastSpan = lettersArray.pop();
+      lastSpan.classList.add('bounceOut');
+      lastSpan.addEventListener('animationend', () => {
+        if (lastSpan.parentNode) lastSpan.parentNode.removeChild(lastSpan);
+      });
+    }
+
+    // On input event - detect new characters added (append only)
+    input.addEventListener('input', e => {
+      const val = input.value;
+      const valLength = val.length;
+      const spanCount = lettersArray.length;
+
+      if (valLength > spanCount) {
+        // New letter(s) added
+        for (let i = spanCount; i < valLength; i++) {
+          addLetter(val[i]);
+        }
+      } else if (valLength < spanCount) {
+        // Letters removed (backspace or delete)
+        // Remove excess letter spans from end
+        const removeCount = spanCount - valLength;
+        for (let i = 0; i < removeCount; i++) {
+          removeLastLetter();
+        }
+      } else {
+        // Same length, possible replace or no change, just sync text content
+        for(let i = 0; i < valLength; i++) {
+          if (lettersArray[i].textContent !== val[i]) {
+            lettersArray[i].textContent = val[i];
+          }
+        }
+      }
+    });
+
+    // Handle keydown for backspace bounce
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace') {
+        // Just remove last letter visually with bounceOut
+        // The actual input value will update after this event
+        removeLastLetter();
+      }
+
+      // Allow '/' key to be typed in the terminal
+      if (e.key === '/' && terminal.style.display === 'flex') {
+        e.stopPropagation();
+      }
+    });
+
+    // On enter: process commands
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        if (!cmd) return;
+
+        appendHistory('> ' + cmd);
+
+        const cmdLower = cmd.toLowerCase();
+
+        if (cmdLower === '/youtube') {
+          appendHistory('Opening YouTube channel...');
+          window.open('https://www.youtube.com/@L_Cant_Have_L_Username', '_blank');
+        } else if (cmdLower === '/monohub') {
+          appendHistory('Opening Discord invite...');
+          window.open('https://discord.gg/yxruActV', '_blank');
+        } else if (cmdLower === '/skid') {
+          appendHistory('Opening Skid repo...');
+          window.open('https://github.com/iiDk-the-actual/iis.Stupid.Menu/tree/master', '_blank');
+        } else if (cmdLower === '/help') {
+          appendHistory('Commands:\n' + commandsList.join('\n'));
+        } else {
+          appendHistory('Unknown command: ' + cmd + '\nType /help for commands.');
+        }
+
+        // Clear input and letters
+        input.value = '';
+        lettersArray.forEach(span => span.remove());
+        lettersArray = [];
+
+        e.preventDefault();
+      }
+    });
+
+    // Initialize bouncing letters if input preset
+    window.addEventListener('load', () => {
+      if (input.value) {
+        for (let c of input.value) addLetter(c);
+      }
+    });
+  </script>
 </body>
 </html>
