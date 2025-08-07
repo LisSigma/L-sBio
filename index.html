@@ -19,18 +19,67 @@
       font-family: 'Outfit', sans-serif;
       overflow: hidden;
       color: white;
-      background: #001f3f;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
     }
 
-    /* 🌊 Actual Animated SVG Waves Background */
+    /* Full viewport background gradient container */
+    .background-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      background: linear-gradient(135deg, #001025 0%, #000814 70%, #000000 100%);
+      pointer-events: none;
+    }
+
+    /* ✨ Sparkling Particles */
+    .sparkles {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+      overflow: visible;
+    }
+
+    .sparkle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      filter: drop-shadow(0 0 3px #fff);
+      animation: sparkleAnim linear infinite;
+      width: 2px;
+      height: 2px;
+    }
+
+    @keyframes sparkleAnim {
+      0% {
+        opacity: 0.7;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 0.2;
+        transform: translateY(-6px) scale(0.6);
+      }
+      100% {
+        opacity: 0.7;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* 🌊 Animated SVG Waves Background */
     .waves-container {
       position: fixed;
       bottom: 0;
       width: 100%;
-      height: 25vh;
-      min-height: 150px;
-      z-index: -3;
+      height: 20vh;
+      min-height: 120px;
+      z-index: -2;
       overflow: hidden;
       pointer-events: none;
     }
@@ -41,22 +90,23 @@
       width: 200%;
       height: 100%;
       animation: waveMove 10s linear infinite;
-      opacity: 0.4;
-      fill: #0077cc;
+      opacity: 0.3;
+      fill: #005f99;
+      mix-blend-mode: screen;
     }
 
     svg.wave-svg:nth-child(2) {
       animation-duration: 15s;
       bottom: 5px;
-      fill: #005fa3;
-      opacity: 0.5;
+      fill: #003d66;
+      opacity: 0.4;
     }
 
     svg.wave-svg:nth-child(3) {
       animation-duration: 20s;
       bottom: 10px;
-      fill: #003d66;
-      opacity: 0.6;
+      fill: #001f33;
+      opacity: 0.5;
     }
 
     @keyframes waveMove {
@@ -64,51 +114,35 @@
       to { transform: translateX(-50%); }
     }
 
-    /* ✨ Sparkling Particles */
-    .sparkles {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      overflow: visible;
-    }
-
-    .sparkle {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 3px #fff);
-      animation: sparkleAnim linear infinite;
-    }
-
-    @keyframes sparkleAnim {
-      0% {
-        opacity: 0.8;
-        transform: translateY(0) scale(1);
-      }
-      50% {
-        opacity: 0.2;
-        transform: translateY(-10px) scale(0.5);
-      }
-      100% {
-        opacity: 0.8;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* 👤 Centered Content */
-    .center {
+    /* 👤 Centered Content Container Box with subtle white translucent background */
+    .content-box {
       position: relative;
       z-index: 1;
-      height: 100%;
+      max-width: 360px;
+      width: 90vw;
+
+      background: rgba(255 255 255 / 0.08); /* very subtle white */
+      border-radius: 30px;
+      padding: 40px 30px;
+
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      user-select: none;
       animation: fadeIn 2s ease-in-out;
+
+      /* subtle white border */
+      border: 1.5px solid rgba(255 255 255 / 0.12);
+
+      /* subtle shadow to help it pop */
+      box-shadow:
+        0 8px 30px rgba(255 255 255 / 0.06),
+        inset 0 0 20px rgba(255 255 255 / 0.10);
+
+      /* keep text readable */
+      text-shadow:
+        0 0 6px rgba(0, 255, 255, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     .pfp {
@@ -118,14 +152,16 @@
       border: 3px solid white;
       margin-bottom: 20px;
       animation: popIn 1.2s ease-out;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
     }
 
     h1 {
       font-size: 3rem;
       text-shadow: 0 0 15px #00ffff;
       animation: slideIn 1.5s ease-out;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      user-select: text;
+      color: white;
     }
 
     /* Container for icons side by side */
@@ -137,19 +173,21 @@
 
     .link-icon {
       cursor: pointer;
-      display: inline-block;
+      display: inline-flex;
       user-select: none;
       transition: transform 0.3s ease, filter 0.3s ease;
       filter: drop-shadow(0 0 10px currentColor);
-      display: flex;
       align-items: center;
       justify-content: center;
+      color: inherit;
+      text-decoration: none;
     }
 
     .link-icon img {
       width: 50px;
       height: 50px;
-      pointer-events: none; /* so the link handles click */
+      pointer-events: none;
+      display: block;
     }
 
     .link-icon.youtube {
@@ -172,14 +210,14 @@
         0 0 20px #99aaff,
         0 0 30px #99aaff;
       transition: transform 0.3s ease, text-shadow 0.3s ease;
-      user-select: none;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 50px;
       height: 50px;
       line-height: 48px;
-      border-radius: 10px;
+      border-radius: 12px;
+      background: rgba(255 255 255 / 0.05);
     }
 
     .link-icon.discord:hover {
@@ -211,12 +249,14 @@
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- 🔊 Audio playback (UNMUTED, loops, autoplay) -->
+  <!-- Background gradient behind everything -->
+  <div class="background-gradient" aria-hidden="true"></div>
+
+  <!-- 🔊 Audio playback -->
   <audio autoplay loop playsinline muted id="bgAudio">
     <source src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/ssvid.net--fake-emotions_360.mp4" type="audio/mp4">
     Your browser does not support audio playback.
@@ -225,7 +265,7 @@
   <!-- ✨ Sparkling Particles Container -->
   <div class="sparkles" id="sparkles"></div>
 
-  <!-- 🌊 Actual Animated SVG Waves Background -->
+  <!-- 🌊 Animated SVG Waves Background -->
   <div class="waves-container" aria-hidden="true">
     <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,192L48,176C96,160,192,128,288,144C384,160,480,224,576,234.7C672,245,768,203,864,170.7C960,139,1056,117,1152,112C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/>
@@ -238,51 +278,57 @@
     </svg>
   </div>
 
-  <!-- 👤 Profile content -->
-  <div class="center" role="main">
+  <!-- 👤 Profile content box -->
+  <div class="content-box" role="main" aria-label="Profile content">
     <img class="pfp" src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/download.jfif" alt="L Profile Picture" />
     <h1>L</h1>
 
     <!-- Icons side by side -->
-    <div class="links-row" role="navigation" aria-label="Social links">
+    <nav class="links-row" aria-label="Social links">
       <a href="https://www.youtube.com/@L_Cant_Have_L_Username" target="_blank" rel="noopener noreferrer" class="link-icon youtube" aria-label="YouTube Channel">
         <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube Logo" />
       </a>
       <a href="https://discord.gg/yxruActV" target="_blank" rel="noopener noreferrer" class="link-icon discord" aria-label="Join Discord">
         M
       </a>
-    </div>
+    </nav>
   </div>
 
   <script>
-    // Fix audio autoplay restrictions by unmuting after user interaction
     const audio = document.getElementById('bgAudio');
+
+    // Unmute and try play quickly
+    audio.muted = false;
+    function tryPlayAudio(attempt = 0) {
+      audio.play().catch(() => {
+        if (attempt < 5) {
+          setTimeout(() => tryPlayAudio(attempt + 1), 400);
+        }
+      });
+    }
+    tryPlayAudio();
+
+    // Retry on first click
     document.body.addEventListener('click', () => {
-      if(audio.muted) {
-        audio.muted = false;
-        audio.play();
-      }
+      tryPlayAudio();
     }, { once: true });
 
-    // Create sparkles randomly scattered with animation
+    // Sparkles setup
     const sparklesContainer = document.getElementById('sparkles');
-    const sparkleCount = 50;
+    const sparkleCount = 60;
 
     for(let i = 0; i < sparkleCount; i++) {
       const sparkle = document.createElement('div');
       sparkle.classList.add('sparkle');
 
-      // random sizes between 2px and 6px
-      const size = Math.random() * 4 + 2;
+      const size = Math.random() * 1.5 + 1.5;
       sparkle.style.width = size + 'px';
       sparkle.style.height = size + 'px';
 
-      // random position inside viewport
       sparkle.style.top = (Math.random() * 100) + 'vh';
       sparkle.style.left = (Math.random() * 100) + 'vw';
 
-      // random animation duration and delay
-      sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      sparkle.style.animationDuration = (Math.random() * 4 + 2) + 's';
       sparkle.style.animationDelay = (Math.random() * 5) + 's';
 
       sparklesContainer.appendChild(sparkle);
