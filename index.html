@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>L's Wave Page</title>
+  <title>L's Waves Page</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
@@ -19,31 +18,62 @@
       height: 100%;
       font-family: 'Outfit', sans-serif;
       overflow: hidden;
-      background-color: #000;
       color: white;
     }
 
-    /* Fullscreen video background */
-    video.bg-video {
+    /* 🌊 Animated Wave Background */
+    .waves {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .overlay {
-      position: relative;
       width: 100%;
       height: 100%;
+      background: linear-gradient(to top, #001f3f, #003366);
+      overflow: hidden;
+      z-index: -1;
+      animation: bgPulse 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgPulse {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.15); }
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 200%;
+      height: 100%;
+      background: url('https://svgshare.com/i/vYv.svg');
+      background-size: cover;
+      opacity: 0.1;
+      animation: waveAnimation 20s linear infinite;
+    }
+
+    .wave:nth-child(2) {
+      animation-duration: 30s;
+      opacity: 0.2;
+    }
+
+    .wave:nth-child(3) {
+      animation-duration: 40s;
+      opacity: 0.3;
+    }
+
+    @keyframes waveAnimation {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* 👤 Centered Content */
+    .center {
+      position: relative;
+      z-index: 1;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.4); /* semi-dark overlay */
       animation: fadeIn 2s ease-in-out;
     }
 
@@ -54,11 +84,30 @@
       border: 3px solid white;
       margin-bottom: 20px;
       animation: popIn 1.2s ease-out;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
     h1 {
       font-size: 3rem;
+      text-shadow: 0 0 15px #00ffff;
       animation: slideIn 1.5s ease-out;
+    }
+
+    .youtube-link {
+      margin-top: 20px;
+      animation: fadeSlideUp 2s ease-out;
+    }
+
+    .youtube-link img {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 10px #ff0000aa);
+    }
+
+    .youtube-link img:hover {
+      transform: scale(1.1) rotate(-3deg);
+      filter: drop-shadow(0 0 20px #ff0000);
     }
 
     @keyframes fadeIn {
@@ -75,20 +124,42 @@
       0% { transform: translateY(40px); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hide native audio player */
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🔊 Background video (with sound!) -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/ssvid.net--fake-emotions_360.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <!-- 🔊 Audio playback (UNMUTED, loops, autoplay) -->
+  <audio autoplay loop>
+    <source src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/ssvid.net--fake-emotions_360.mp4" type="audio/mp4">
+    Your browser does not support audio playback.
+  </audio>
 
-  <!-- 👤 Overlay with profile & name -->
-  <div class="overlay">
+  <!-- 🌊 Background waves -->
+  <div class="waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+  <!-- 👤 Profile content -->
+  <div class="center">
     <img class="pfp" src="https://raw.githubusercontent.com/LisSigma/L-sBio/main/download.jfif" alt="L Profile Picture">
     <h1>L</h1>
+
+    <!-- 🔴 YouTube Button -->
+    <a class="youtube-link" href="https://www.youtube.com/@L_Cant_Have_L_Username" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube Link">
+    </a>
   </div>
 
 </body>
